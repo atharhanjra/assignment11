@@ -4,11 +4,11 @@ A FastAPI calculator app with a secure user model, built for Module 10. Users ar
 
 ## Docker Hub
 
-Image: **https://hub.docker.com/r/atharhanjra/assignment10**
+Image: **https://hub.docker.com/r/atharhanjra/assignment11**
 
 ```
-docker pull atharhanjra/assignment10:latest
-docker run -p 8000:8000 atharhanjra/assignment10:latest
+docker pull atharhanjra/assignment11:latest
+docker run -p 8000:8000 atharhanjra/assignment11:latest
 ```
 
 Then open http://localhost:8000.
@@ -20,12 +20,22 @@ Then open http://localhost:8000.
 - **Password hashing** (`app/security.py`): `hash_password` and `verify_password` using bcrypt
 - **User functions** (`app/user_service.py`): `create_user` saves only the hashed password; `authenticate_user` checks a login
 
+## Calculation Model (Module 11)
+
+- **Model** (`app/models/calculation.py`): `id`, `a`, `b`, `type`, `result`, and `user_id` (a foreign key to `users`). The result is computed once and stored.
+- **Schemas** (`app/schemas/calculation.py`): `CalculationCreate` only allows Add, Sub, Multiply, or Divide, and rejects dividing by zero; `CalculationRead` returns the saved calculation.
+- **Factory** (`app/calculation_factory.py`): `CalculationFactory` picks the right operation for each type.
+
+To run only the calculation tests:
+
+    pytest tests/unit/test_calculation_factory.py tests/unit/test_calculation_schemas.py tests/integration/test_calculation_db.py
+
 ## Running the Tests Locally
 
 1. Set up the project:
    ```
-   git clone https://github.com/atharhanjra/assignment10.git
-   cd assignment10
+   git clone https://github.com/atharhanjra/assignment11.git
+   cd assignment11
    python3 -m venv venv
    source venv/bin/activate
    pip install -r requirements.txt
@@ -56,4 +66,4 @@ The workflow in `.github/workflows/test.yml` runs on every push to `main`:
 
 1. **test:** runs all tests with a PostgreSQL service container
 2. **security:** builds the Docker image and scans it with Trivy
-3. **deploy:** pushes the image to Docker Hub as `atharhanjra/assignment10`
+3. **deploy:** pushes the image to Docker Hub as `atharhanjra/assignment11`
